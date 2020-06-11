@@ -10,11 +10,12 @@
 - `git commit -am "message for the commit"`
 
 - `git diff HEAD^ HEAD`
+
   > difference between previous and current commit
 
-`gh pr create --title "master <> release" --body "Merge Release into master" --base "parsable/gutenberg:master"`
+- `gh pr create --title "master <> release" --body "Merge Release into master" --base "parsable/gutenberg:master"`
 
-`gh pr create --title "develop <> release" --body "Merge Release into develop" --base "parsable/gutenberg:develop"`
+- `gh pr create --title "develop <> release" --body "Merge Release into develop" --base "parsable/gutenberg:develop"`
 
 - `git status -sb`
 
