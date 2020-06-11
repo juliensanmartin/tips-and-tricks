@@ -1,12 +1,10 @@
 # Git
 
-git checkout develop
+- `git checkout develop`
 
-git checkout -b release/1.2.3
+- `git checkout -b release/1.2.3`
 
-git push -u origin release/1.2.3
-
-# Git
+- `git push -u origin release/1.2.3`
 
 - `git add .`
 - `git commit -am "message for the commit"`
