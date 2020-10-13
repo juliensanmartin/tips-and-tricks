@@ -7,22 +7,22 @@
 - node file.js
   > execute a JS file
 
-```
+```js
 async funtion foo(bar, boo){
 	await fofo;
 	…
 }
 ```
 
-```
+```js
 async () => {
 	await …
 }
 ```
 
-```
-global.test = test
-global.foo = foo
+```js
+global.test = test;
+global.foo = foo;
 ```
 
     > in a setup-global.js file
