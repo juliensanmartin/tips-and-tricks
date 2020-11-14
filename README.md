@@ -1,12 +1,35 @@
-# tips-and-tricks
+# Tips And Tricks
 
-1. Npm/Yarn
-2. Shell
-3. Eslint/Prettier
-4. JS
-5. Testing-Library
-6. Cypress
-7. VSCode
-8. Jest
-9. Git
-10. Mac
+## JavaScript - TypsScript
+
+- [Javascript](./tips/javascript/README.md)
+- [TypeScript](./tips/typescript/README.md)
+
+## Testing
+
+- [Testing-Library](./tips/testing-library/README.md)]
+- [Jest](./tips/jest/README.md)
+- [Cypress](./tips/cypress/README.md)
+
+## Linting
+
+- [EsLint/Prettier](./tips/eslint-prettier/README.md)
+
+## Algorithms
+
+- [Interview](./tips/interview/README.md)
+- [Algorithms](./tips/algorithms/README.md)
+
+## Git
+
+- [Git](./tips/git/README.md)
+
+## Yarn - NPM
+
+- [Npm/Yarn](./tips/npm-yarn/README.md)
+
+## Misc
+
+- [Shell](./tips/shell/README.md)
+- [VSCode](./tips/vs-code/README.md)
+- [Mac](./tips/mac/README.md)

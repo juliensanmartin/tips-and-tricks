@@ -866,3 +866,42 @@ JSRecentParts.speakUp('But isnt it cleaner?'); // Kyle But isnt it cleaner?
 No dealing with `prototype` or `new` or `constructor`, just objects thanks to `Object.create()`
 
 Delegation design pattern is a very powerful pattern.
+
+# Other Tips
+
+```js
+throw new Error('my error string');
+```
+
+`node file.js` > execute a JS file
+
+```js
+async function foo(bar, boo){
+	await fofo;
+	...
+}
+```
+
+```js
+async () => {
+	await ...
+}
+```
+
+In a setup-global.js file
+
+```js
+global.test = test;
+global.foo = foo;
+```
+
+`node —require ./setup-globals.js` > add function to global object of node if execute like:
+
+`/favorite number/i` > regular expression in JS (look for "favorite number" without being case sensitive)
+
+```html
+<form>
+	<label htmlFor=“username”>Username<label>
+	<input id=“username” placeholder=“username” name=“username” />
+</form>
+```
