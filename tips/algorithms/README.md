@@ -153,19 +153,168 @@ Try to make it work for the example. (not recommended better go with brute force
 
 Go through all the possible way, usually not optimized (exponential)
 
-# Dynamic Programming
+# Dynamic Programming (DP) - MIT course
 
-Techniques to optimize code
+https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/MIT6_006F11_lec19.pdf
 
-Cache values to avoid repeated calculations.
+=~ "careful brute force"
+=~ guessing + recursive + memoization
+=~ shortest paths in some DAG (Directed Cyclic Graph)
 
-Approach: Recursive Top Down or Iterative Bottom Up
+time = #subproblems \* time/subproblems (treating recursive calls as O(1))
 
-Dynamic programming has overlapping subproblems not like Divide and Conquer
+## Fibonacci
+
+F1 = F2 = 1, Fn = Fn-1 + Fn-2
+
+Naive recursive algorithm
+fib(n):
+if n<=2 f=1
+else f=fib(n-1)+fib(n-2)
+return f
+
+Exponential time: T(n)=T(n-1)+T(n-2)+O(1)=2T(n-2)=O(2 exp n/2) => BAD
+
+## Memoized DP algo:
+
+memo={}
+fib(n):
+if n in memo: return memo[n]
+if n<=2 f=1
+else f=fib(n-1)+fib(n-2)
+memo[n]=f
+return f
+
+We only recurses the first time it's called (O(n)) and then use the memoized calls (O(1)) so total is O(n) => linear
+
+DP: recursion + memoization + guessing
+
+- memoize (remember) & reuse solutions to subproblems that help solve the actual problem
+  => O() => #subproblems + time/subproblems
+
+## Bottom up DP algo:
+
+fib={}
+for k in range(k):
+if k<=2: f:1
+else f=fib[k-1]+fib[k-2] //lookup not function call, already computed values
+fib[k]=f
+return fib[n]
+
+exactly same computation
+topological sort of subproblem dependency DAG Fn-3 -> Fn-2 -> Fn-1 -> Fn
+
+## Shortest paths
+
+Guessing: Don't know the answer? Guess! ...try all the guesses! (And take best one)
+
+shortest path S to V: S > ... > ... > ... > V
+
+S > ... > ... > U > V
+sp(S,V)=min(sp(S,U))+edge(U,V)
+base case: sp(S,S) = 0
+sp(S,U) is recursive but just recursive is bad so we can add memoization
+if dict(s,v) return dict(s,v) otherwise to computation
+
+Is memoization good? No because infinite loop on graph with cycles
+A
+| \
+S | V > S(V) look at S(A), S(A) look at S(B), S(B) look at S(V) and S(S) (infinite loop)
+\ | /
+B
+
+Subproblem dependencies should be acyclic for memoization
+
+To solve we need to make an acyclic graph into cyclic, flatten the graph by duplicating into layer
+
+## 5 easy steps to DP
+
+https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/MIT6_006F11_lec20.pdf
+
+1- Define subproblems (# of subproblems)
+2- Guess (part of solution) (# choices for guess)
+3- related subproblem solutions (recurence) (time/subproblems)
+4- Recurse & memoize (or build DP table bottom-up) -> check that subproblem recurrence is acyclic i.e topologycal order - DAG
+5- solve the origin problem
+
+## Text jutification
+
+Split text into "good" lines
+Text = list of words
+badness(i,j) => how bad it is to use words between i and j for a line
+if badness(i,j) don't fit then return infinity
+else return (page width - total width of words)^3
+
+1 or 2 can be switched
+
+1. subproblems (hard part): suffixes words[i:]
+   #subprobs: n
+2. guess (hard part): where to start the 2nd line
+   #choices: <= n-i =~ O(n)
+3. recurrences: DP(i)= min(badness(i,j) + DP(j)) for every j in range(i+1, n+1)
+4. topologic order: i=n, n-1 ..., 0
+   total time: O(n^2)
+5. original problems: DP(0)
+
+## Blackjack
+
+Perfect-information on Blackjack
+Deck = C0, C1, Cn-1
+1 player vs dealer
+\$1 bet/hand
+
+1. guess: how many hits?
+   #choices <=n
+2. subproblems: suffix Ci:
+   #subproblems = n
+3. recurrence: BJ(i)=max(BJ(j)+ outcome in {-$1, $0, +\$1}) for #hits in range (0, n) if valid play
+   j=i+4+#hits+#decker hits
+
+## DP - 3
+
+https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/MIT6_006F11_lec21.pdf
+
+## DP - 4
+
+https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/MIT6_006F11_lec22.pdf
 
 ####################################################################
 
 # Data Structure
+
+## Heap ans Heap-sort with max heap
+
+https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/MIT6_006F11_lec04.pdf
+
+## Binary Search Trees, BST Sort
+
+https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/MIT6_006F11_lec05.pdf
+
+## AVL Trees
+
+https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/MIT6_006F11_lec06.pdf
+
+## Graph
+
+### BFS - shortest path
+
+https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/MIT6_006F11_lec13.pdf
+
+### DFS - detext cycle - DAG - topological order
+
+https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/MIT6_006F11_lec14.pdf
+
+## Shortest Paths Problems
+
+https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/MIT6_006F11_lec15.pdf
+
+### Dijkstra
+
+https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/MIT6_006F11_lec16.pdf
+
+### Bellman-Ford
+
+https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/MIT6_006F11_lec17.pdf
 
 ## Stack and Queue
 
