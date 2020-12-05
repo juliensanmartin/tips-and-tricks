@@ -47,6 +47,33 @@ function callMyself() {
 
 ## Binary search
 
+Found here https://leetcode.com/discuss/general-discussion/786126/python-powerful-ultimate-binary-search-template-solved-many-problems
+
+- Correctly initialize the boundary variables left and right to specify search space. Only one rule: set up the boundary to include all possible elements.
+- Decide return value. Is it return left or return left - 1? Remember this: after exiting the while loop, left is the minimal k​ satisfying the condition function.
+- Design the condition function. This is the most difficult and most beautiful part. Needs lots of practice.
+
+```js
+var BS = function() {
+  // could be [0, n], [1, n] etc. Depends on problem
+    let left = // min range
+    let right = // max range
+
+    while (left < right) {
+        const mid = left + Math.floor((right - left) / 2);
+        console.log(left, right, mid);
+
+        if (condition(mid, H, piles)){
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+
+    return left; // or left+1
+};
+```
+
 # Sorting
 
 - Naive sort:
@@ -147,7 +174,7 @@ console.log(sortedList);
 
 # Greedy Algorithms
 
-Try to make it work for the example. (not recommended better go with brute force)
+Choose best solution at each level instead of choising the overall best solution.
 
 # Brute force
 
@@ -285,6 +312,8 @@ https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-in
 ## Heap ans Heap-sort with max heap
 
 https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/lecture-videos/MIT6_006F11_lec04.pdf
+
+https://blog.bitsrc.io/implementing-heaps-in-javascript-c3fbf1cb2e65
 
 ## Binary Search Trees, BST Sort
 
@@ -430,6 +459,66 @@ A tree is made of trees etc... > recursion
 
 ## Binary Trees - Traversals
 
+## Binary Search Trees
+
+```js
+/** Class representing a Binary Search Tree. */
+
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+class BinarySearchTree {
+  constructor() {
+    this.root = null;
+    this.size = 0;
+  }
+  add(value) {
+    const newNode = new Node(value);
+    if (this.root) {
+      const { found, parent } = this.findNodeAndParent(value);
+      if (found) {
+        // duplicated: value already exist on the tree
+        found.meta.multiplicity = (found.meta.multiplicity || 1) + 1;
+      } else if (value < parent.value) {
+        parent.left = newNode;
+      } else {
+        parent.right = newNode;
+      }
+    } else {
+      this.root = newNode;
+    }
+    this.size += 1;
+    return newNode;
+  }
+  findNodeAndParent(value) {
+    let node = this.root;
+    let parent;
+    while (node) {
+      if (node.value === value) {
+        break;
+      }
+      parent = node;
+      node = value >= node.value ? node.right : node.left;
+    }
+    return { found: node, parent };
+  }
+}
+
+const myBST = new BinarySearchTree();
+
+myBST.add(1);
+console.log(myBST);
+```
+
+Complexity: O(h) where h is the height of the tree
+
+if the tree is unbalanced then the complexity tends to more linear complexity
+
 # Graph
 
 Need to store 2 things, object and relationship
@@ -545,63 +634,3 @@ Graph Exploration
 - Self loop
 - Sparse VS Dense
 - Cyclic VS Acyclic
-
-### Binary Search Tree
-
-```js
-/** Class representing a Binary Search Tree. */
-
-class Node {
-  constructor(value) {
-    this.value = value;
-    this.left = null;
-    this.right = null;
-  }
-}
-
-class BinarySearchTree {
-  constructor() {
-    this.root = null;
-    this.size = 0;
-  }
-  add(value) {
-    const newNode = new Node(value);
-    if (this.root) {
-      const { found, parent } = this.findNodeAndParent(value);
-      if (found) {
-        // duplicated: value already exist on the tree
-        found.meta.multiplicity = (found.meta.multiplicity || 1) + 1;
-      } else if (value < parent.value) {
-        parent.left = newNode;
-      } else {
-        parent.right = newNode;
-      }
-    } else {
-      this.root = newNode;
-    }
-    this.size += 1;
-    return newNode;
-  }
-  findNodeAndParent(value) {
-    let node = this.root;
-    let parent;
-    while (node) {
-      if (node.value === value) {
-        break;
-      }
-      parent = node;
-      node = value >= node.value ? node.right : node.left;
-    }
-    return { found: node, parent };
-  }
-}
-
-const myBST = new BinarySearchTree();
-
-myBST.add(1);
-console.log(myBST);
-```
-
-Complexity: O(h) where h is the height of the tree
-
-if the tree is unbalanced then the complexity tends to more linear complexity

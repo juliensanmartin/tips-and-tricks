@@ -11,9 +11,10 @@
 - [Jest](./tips/jest/README.md)
 - [Cypress](./tips/cypress/README.md)
 
-## CSS
+## CSS/HTML
 
 - [CSS](./tips/css/README.md)
+- [HTML](./tips/html/README.md)
 
 ## Linting
 
@@ -37,3 +38,4 @@
 - [Shell](./tips/shell/README.md)
 - [VSCode](./tips/vs-code/README.md)
 - [Mac](./tips/mac/README.md)
+- [Security](./tips/security/README.md)

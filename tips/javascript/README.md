@@ -905,3 +905,184 @@ global.foo = foo;
 	<input id=“username” placeholder=“username” name=“username” />
 </form>
 ```
+
+# Promises
+
+The `XMLHttpRequest` API is async but does not use the Promises API. `fetch API` (XHR's replacement) does.
+
+## Basic Usage
+
+(The `new Promise()` constructor should only be used for legacy async tasks, like usage of `setTimeout` or `XMLHttpRequest`)
+
+```js
+var p = new Promise((resolve, reject) => {
+	// Do an async task async task and then...
+	if(/* good condition */) {
+		resolve('Success!');
+	}
+	else {
+		reject('Failure!');
+	}
+});
+
+p.then(function(result) {
+	/* do something with the result */
+}).catch(function() {
+	/* error :( */
+}).finally(function() {
+   /* executes regardless or success for failure */
+});
+```
+
+```js
+function get(url) {
+  // Return a new promise.
+  return new Promise(function (resolve, reject) {
+    // Do the usual XHR stuff
+    var req = new XMLHttpRequest();
+    req.open('GET', url);
+
+    req.onload = function () {
+      // This is called even on 404 etc
+      // so check the status
+      if (req.status == 200) {
+        // Resolve the promise with the response text
+        resolve(req.response);
+      } else {
+        // Otherwise reject with the status text
+        // which will hopefully be a meaningful error
+        reject(new Error(req.statusText));
+      }
+    };
+
+    // Handle network errors
+    req.onerror = function () {
+      reject(new Error('Network Error'));
+    };
+
+    // Make the request
+    req.send();
+  });
+}
+
+// Use it!
+get('story.json').then(
+  function (response) {
+    console.log('Success!', response);
+  },
+  function (error) {
+    console.error('Failed!', error);
+  }
+);
+```
+
+Sometimes you don't need to complete an async tasks within the promise -- if it's possible that an async action will be taken, however, returning a promise will be best so that you can always count on a promise coming out of a given function. In that case you can simply call `Promise.resolve()` or `Promise.reject()` without using the new keyword.
+
+```js
+var userCache = {};
+
+function getUserDetail(username) {
+  // In both cases, cached or not, a promise will be returned
+
+  if (userCache[username]) {
+    // Return a promise without the "new" keyword
+    return Promise.resolve(userCache[username]);
+  }
+
+  // Use the fetch API to get the information
+  // fetch returns a promise
+  return fetch('users/' + username + '.json')
+    .then(function (result) {
+      userCache[username] = result;
+      return result;
+    })
+    .catch(function () {
+      throw new Error('Could not find user: ' + username);
+    });
+}
+```
+
+## Promise.all
+
+The `Promise.all` method takes an array of promises and fires one callback once they are all resolved:
+
+```js
+Promise.all([promise1, promise2])
+  .then(function (results) {
+    // Both promises resolved
+  })
+  .catch(function (error) {
+    // One or more promises was rejected
+  });
+```
+
+# Async & await
+
+```js
+// Function declared as async so await can be used
+async function fetchContent() {
+  // Instead of using fetch().then, use await
+  let content = await fetch('/');
+  let text = await content.text();
+
+  // Inside the async function text is the request body
+  console.log(text);
+
+  // Resolve this async function with the text
+  return text;
+}
+
+// Use the async function
+var promise = fetchContent().then(...);
+```
+
+```js
+// Before: callback city!
+fetch('/users.json')
+  .then((response) => response.json())
+  .then((json) => {
+    console.log(json);
+  })
+  .catch((e) => {
+    console.log('error!');
+  });
+
+// After: no more callbacks!
+async function getJson() {
+  try {
+    let response = await fetch('/users.json');
+    let json = await response.json();
+    console.log(json);
+  } catch (e) {
+    console.log('Error!', e);
+  }
+}
+```
+
+## Parallelism
+
+```js
+// Will take 1000ms total!
+async function series() {
+  await wait(500);
+  await wait(500);
+  return 'done!';
+}
+
+// Would take only 500ms total!
+async function parallel() {
+  const wait1 = wait(500);
+  const wait2 = wait(500);
+  await wait1;
+  await wait2;
+  return 'done!';
+}
+```
+
+The first block is bad because the second wait happens after the the first wait completes. The second block is a better method: trigger both wait calls and then use await ; doing so allows the async functions to happen concurrently!
+
+## Promise.all equivalent
+
+```js
+let [foo, bar] = await Promise.all([getFoo(), getBar()]);
+```

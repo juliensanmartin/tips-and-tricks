@@ -62,3 +62,5 @@
 
 - `cat package.json | grep version | head -1 | awk -F: '{ print \$2 }' | sed 's/[",] > g'`
   > get current version of package.json
+
+![Linux command](https://i.redd.it/isnefnt32wn21.jpg)
