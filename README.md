@@ -5,6 +5,10 @@
 - [Javascript](./tips/javascript/README.md)
 - [TypeScript](./tips/typescript/README.md)
 
+## GraphQL
+
+- [GraphQL](./tips/graphql/README.md)
+
 ## Testing
 
 - [Testing-Library](./tips/testing-library/README.md)
@@ -25,6 +29,14 @@
 - [Interview](./tips/interview/README.md)
 - [Algorithms](./tips/algorithms/README.md)
 
+## Leadership Principle
+
+- [LP](./tips/leadership-principles/README.md)
+
+## Design Systems
+
+-[DS](./tips/design-systems/README.md)
+
 ## Git
 
 - [Git](./tips/git/README.md)
@@ -38,4 +50,3 @@
 - [Shell](./tips/shell/README.md)
 - [VSCode](./tips/vs-code/README.md)
 - [Mac](./tips/mac/README.md)
-- [Security](./tips/security/README.md)
